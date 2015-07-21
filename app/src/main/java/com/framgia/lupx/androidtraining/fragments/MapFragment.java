@@ -12,6 +12,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.framgia.lupx.androidtraining.R;
 import com.google.android.gms.maps.CameraUpdate;
@@ -32,12 +33,18 @@ public class MapFragment extends Fragment {
     private MapView mapView;
     private GoogleMap map;
 
+    private Button btnStart;
+    private Button btnStop;
+
     private BroadcastReceiver locationReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             Location location = LocationData.getInstance().location;
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude()));
+            CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
+
             map.animateCamera(cameraUpdate);
+            map.animateCamera(zoom);
         }
     };
 
@@ -47,6 +54,10 @@ public class MapFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         mapView = (MapView) view.findViewById(R.id.mapview);
         mapView.onCreate(savedInstanceState);
+        btnStart = (Button) view.findViewById(R.id.btnStart);
+        btnStop = (Button) view.findViewById(R.id.btnStop);
+        btnStart.setOnClickListener(clickListener);
+        btnStop.setOnClickListener(clickListener);
         try {
             map = mapView.getMap();
             map.getUiSettings().setMyLocationButtonEnabled(true);
@@ -60,6 +71,23 @@ public class MapFragment extends Fragment {
 
         return view;
     }
+
+    private View.OnClickListener clickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.btnStart:
+                    Intent intent = new Intent(getActivity(), MapLocationService.class);
+                    getActivity().startService(intent);
+                    break;
+
+                case R.id.btnStop:
+                    Intent intentMap = new Intent(getActivity(), MapLocationService.class);
+                    getActivity().stopService(intentMap);
+                    break;
+            }
+        }
+    };
 
     @Override
     public void onResume() {

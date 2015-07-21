@@ -57,7 +57,7 @@ public class MapLocationService extends Service {
                     .getInstance(MapLocationService.this)
                     .sendBroadcast(locationIntent);
             LocationData.getInstance().location = location;
-            Log.v("LOCATION", "CHANGE (" + location.getLatitude() + " - " + location.getLongitude());
+            Toast.makeText(MapLocationService.this, " Location change (" + location.getLatitude() + " - " + location.getLongitude() + ")", Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -99,6 +99,7 @@ public class MapLocationService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        Toast.makeText(this, "Location Service Create", Toast.LENGTH_SHORT).show();
         if (checkPlayServices()) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(connectionCallbacks)
@@ -116,11 +117,13 @@ public class MapLocationService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Toast.makeText(this, "Location Service Start", Toast.LENGTH_SHORT).show();
         return START_STICKY;
     }
 
     @Override
     public void onDestroy() {
+        Toast.makeText(this, "Location Service Destroy", Toast.LENGTH_SHORT).show();
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
         }

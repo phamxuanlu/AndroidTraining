@@ -17,7 +17,7 @@ public class AndroidTrainingApplication extends Application {
         MyApp.getInstance(this).cacheSize = (int) (Runtime.getRuntime().maxMemory() / 1024);
         MyApp.getInstance(this).cacheSize /= 8;
 
-        Intent intent = new Intent(this, MapLocationService.class);
-        startService(intent);
+//        Intent intent = new Intent(this, MapLocationService.class);
+//        startService(intent);
     }
 }
