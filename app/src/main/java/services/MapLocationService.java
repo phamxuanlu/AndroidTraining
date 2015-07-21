@@ -6,6 +6,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -20,7 +21,6 @@ import com.google.android.gms.location.LocationServices;
  */
 public class MapLocationService extends Service {
     public static final String LOCATION_SERVICE_UPDATE = "LOCATION_SERVICE_UPDATE";
-    public static final int ACTION_LOCATION_CHANGED = 1;
 
     private static final long UPDATE_INTERVAL = 5 * 1000;
     private static final long FASTET_INTERVAL = 1000;
@@ -53,10 +53,11 @@ public class MapLocationService extends Service {
         @Override
         public void onLocationChanged(Location location) {
             Intent locationIntent = new Intent(LOCATION_SERVICE_UPDATE);
-            locationIntent.putExtra(LOCATION_SERVICE_UPDATE, ACTION_LOCATION_CHANGED);
             LocalBroadcastManager
                     .getInstance(MapLocationService.this)
                     .sendBroadcast(locationIntent);
+            LocationData.getInstance().location = location;
+            Log.v("LOCATION", "CHANGE (" + location.getLatitude() + " - " + location.getLongitude());
         }
     };
 

@@ -18,12 +18,15 @@ import java.util.List;
  */
 public class NavDrawerAdapter extends RecyclerView.Adapter<NavDrawerAdapter.NavViewHolder> {
 
+    private RecyclerViewItemClickListener itemClickListener;
+
     private List<NavDrawerItem> data;
     private LayoutInflater inflater;
     private Context context;
 
-    public NavDrawerAdapter(Context context, List<NavDrawerItem> data) {
+    public NavDrawerAdapter(Context context, List<NavDrawerItem> data, RecyclerViewItemClickListener itemClickListener) {
         this.data = data;
+        this.itemClickListener = itemClickListener;
         this.context = context;
         this.inflater = LayoutInflater.from(context);
     }
@@ -36,10 +39,16 @@ public class NavDrawerAdapter extends RecyclerView.Adapter<NavDrawerAdapter.NavV
     }
 
     @Override
-    public void onBindViewHolder(NavViewHolder navViewHolder, int i) {
-        NavDrawerItem item = data.get(i);
-        navViewHolder.imgIcon.setImageResource(item.iconResource);
-        navViewHolder.txtName.setText(item.name);
+    public void onBindViewHolder(NavViewHolder viewHolder, final int position) {
+        NavDrawerItem item = data.get(position);
+        viewHolder.imgIcon.setImageResource(item.iconResource);
+        viewHolder.txtName.setText(item.name);
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemClickListener.onItemClick(position);
+            }
+        });
     }
 
     @Override

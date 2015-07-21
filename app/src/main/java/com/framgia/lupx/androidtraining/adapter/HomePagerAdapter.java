@@ -7,6 +7,7 @@ import android.support.v4.view.PagerAdapter;
 
 import com.framgia.lupx.androidtraining.fragments.HomeArticlesFragment;
 import com.framgia.lupx.androidtraining.fragments.MapFragment;
+import com.framgia.lupx.androidtraining.fragments.NotificationFragment;
 
 /**
  * Created by FRAMGIA\pham.xuan.lu on 20/07/2015.
@@ -31,6 +32,8 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
             case 1:
                 fragment = new MapFragment();
                 break;
+            case 2:
+                fragment = new NotificationFragment();
         }
         if (fragment == null) {
             fragment = new HomeArticlesFragment();

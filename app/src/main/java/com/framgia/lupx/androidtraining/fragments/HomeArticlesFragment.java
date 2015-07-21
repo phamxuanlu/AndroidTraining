@@ -1,8 +1,11 @@
 package com.framgia.lupx.androidtraining.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.framgia.lupx.androidtraining.MyApp;
 import com.framgia.lupx.androidtraining.R;
+import com.framgia.lupx.androidtraining.activities.NewsDetailActivity;
 import com.framgia.lupx.androidtraining.adapter.HomeNewsAdapter;
 import com.framgia.lupx.androidtraining.models.guardian.Article;
 import com.framgia.lupx.androidtraining.models.guardian.GuardianApi;
@@ -29,6 +33,7 @@ public class HomeArticlesFragment extends Fragment {
     private RecyclerView recyclerView;
     private HomeNewsAdapter adapter;
     private List<Article> articles;
+    private View mView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,11 +44,13 @@ public class HomeArticlesFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home_articles, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.listArticles);
+
+        mView = inflater.inflate(R.layout.fragment_home_articles, container, false);
+        recyclerView = (RecyclerView) mView.findViewById(R.id.listArticles);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         getData();
-        return view;
+
+        return mView;
     }
 
     private void getData() {
@@ -51,7 +58,14 @@ public class HomeArticlesFragment extends Fragment {
             @Override
             public void onResponse(String response) {
                 articles = GuardianApi.getListArticles(response);
-                adapter = new HomeNewsAdapter(getActivity(), articles);
+                adapter = new HomeNewsAdapter(getActivity(), articles, new HomeNewsAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(int position) {
+                        Intent intent = new Intent(getActivity(), NewsDetailActivity.class);
+                        intent.putExtra("TITLE", articles.get(position).webTitle);
+                        getActivity().startActivity(intent);
+                    }
+                });
                 recyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             }

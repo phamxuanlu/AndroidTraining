@@ -1,5 +1,7 @@
 package com.framgia.lupx.androidtraining.activities;
 
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,11 +9,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.framgia.lupx.androidtraining.R;
+import com.framgia.lupx.androidtraining.adapter.HomePagerAdapter;
+import com.framgia.lupx.androidtraining.adapter.RecyclerViewItemClickListener;
 import com.framgia.lupx.androidtraining.fragments.HomeFragment;
 import com.framgia.lupx.androidtraining.models.NavDrawerItem;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -19,18 +25,47 @@ public class HomeActivity extends AppCompatActivity implements DrawerFragment.Ge
 
     private Toolbar mToolbar;
     private DrawerFragment mDrawerFragment;
-    private HomeFragment homeFragment;
+
+    private PagerSlidingTabStrip tabStrip;
+    private String[] titles;
+    private ViewPager viewPager;
 
     @Override
     public List<NavDrawerItem> getDrawerItems() {
         List<NavDrawerItem> lst = new ArrayList<>();
-        lst.add(new NavDrawerItem(R.drawable.home_32, "Home"));
-        lst.add(new NavDrawerItem(R.drawable.map_32, "Maps"));
-        lst.add(new NavDrawerItem(R.drawable.music_32, "Music"));
-        lst.add(new NavDrawerItem(R.drawable.setting, "Settings"));
-        lst.add(new NavDrawerItem(R.drawable.setting, "About"));
+        lst.add(new NavDrawerItem(R.drawable.globe, "Home"));
+        lst.add(new NavDrawerItem(R.drawable.map, "Maps"));
+        lst.add(new NavDrawerItem(R.drawable.megaphone, "Notification"));
+        lst.add(new NavDrawerItem(R.drawable.music, "Music"));
+        lst.add(new NavDrawerItem(R.drawable.gear, "Settings"));
+        lst.add(new NavDrawerItem(R.drawable.profle, "About"));
 
         return lst;
+    }
+
+    @Override
+    public RecyclerViewItemClickListener getNavItemClickListener() {
+        return new RecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                String tab = getDrawerItems().get(position).name.toLowerCase();
+                for (int i = 0; i < titles.length; i++) {
+                    if (titles[i].toLowerCase().equals(tab)) {
+                        viewPager.setCurrentItem(position);
+                        getSupportActionBar().setTitle(getDrawerItems().get(position).name);
+                    } else {
+                        if (tab.equals("settings")) {
+
+                        }
+                        if (tab.equals("about")) {
+
+                        }
+
+                    }
+                }
+                mDrawerFragment.closeNavDrawer();
+            }
+        };
     }
 
     @Override
@@ -38,8 +73,8 @@ public class HomeActivity extends AppCompatActivity implements DrawerFragment.Ge
         String[] tabs = new String[]{
                 "Home",
                 "Maps",
-                "Music",
-                "News"
+                "Notification",
+                "Music"
         };
         return tabs;
     }
@@ -55,9 +90,13 @@ public class HomeActivity extends AppCompatActivity implements DrawerFragment.Ge
         mDrawerFragment = (DrawerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
         mDrawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
 
-        homeFragment = new HomeFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.container, homeFragment).commit();
-
+        titles = getTabTitles();
+        tabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        tabStrip.setUnderlineHeight(0);
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        HomePagerAdapter adapter = new HomePagerAdapter(getSupportFragmentManager(), titles);
+        viewPager.setAdapter(adapter);
+        tabStrip.setViewPager(viewPager);
     }
 
 

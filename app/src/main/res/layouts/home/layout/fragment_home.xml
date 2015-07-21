@@ -9,7 +9,8 @@
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="48dip"
-        app:pstsIndicatorColor="#ffe55550"
+        app:pstsIndicatorColor="#CCCCCC"
+        app:pstsIndicatorHeight="48dip"
         app:pstsTextAllCaps="true"
         app:pstsUnderlineColor="#000" />
 

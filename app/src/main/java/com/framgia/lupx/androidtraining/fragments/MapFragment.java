@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
 
+import services.LocationData;
 import services.MapLocationService;
 
 /**
@@ -33,7 +35,9 @@ public class MapFragment extends Fragment {
     private BroadcastReceiver locationReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-
+            Location location = LocationData.getInstance().location;
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude()));
+            map.animateCamera(cameraUpdate);
         }
     };
 
@@ -48,7 +52,7 @@ public class MapFragment extends Fragment {
             map.getUiSettings().setMyLocationButtonEnabled(true);
             map.setMyLocationEnabled(true);
             MapsInitializer.initialize(this.getActivity());
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(0, 0), 16);
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(0, 0), 2);
             map.animateCamera(cameraUpdate);
         } catch (Exception e) {
             e.printStackTrace();

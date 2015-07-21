@@ -15,9 +15,9 @@ import android.view.ViewGroup;
 
 import com.framgia.lupx.androidtraining.R;
 import com.framgia.lupx.androidtraining.adapter.NavDrawerAdapter;
+import com.framgia.lupx.androidtraining.adapter.RecyclerViewItemClickListener;
 import com.framgia.lupx.androidtraining.models.NavDrawerItem;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,6 +28,8 @@ public class DrawerFragment extends Fragment {
 
     public interface GetDrawerDataCallback {
         List<NavDrawerItem> getDrawerItems();
+
+        RecyclerViewItemClickListener getNavItemClickListener();
     }
 
     private DrawerLayout mDrawerLayout;
@@ -36,7 +38,7 @@ public class DrawerFragment extends Fragment {
     private RecyclerView recyclerView;
     private NavDrawerAdapter adapter;
     private List<NavDrawerItem> drawerItems;
-
+    private RecyclerViewItemClickListener navItemClick;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,11 +46,17 @@ public class DrawerFragment extends Fragment {
         Activity activity = getActivity();
         if (activity instanceof GetDrawerDataCallback) {
             drawerItems = ((GetDrawerDataCallback) activity).getDrawerItems();
+            navItemClick = ((GetDrawerDataCallback) activity).getNavItemClickListener();
             if (drawerItems == null) {
                 drawerItems = Collections.emptyList();
+
             }
 
         }
+    }
+
+    public void closeNavDrawer() {
+        mDrawerLayout.closeDrawer(containerView);
     }
 
     @Nullable
@@ -57,7 +65,7 @@ public class DrawerFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
         mDrawerLayout = (DrawerLayout) view.findViewById(R.id.drawer_layout);
         recyclerView = (RecyclerView) view.findViewById(R.id.drawerList);
-        adapter = new NavDrawerAdapter(getActivity(), drawerItems);
+        adapter = new NavDrawerAdapter(getActivity(), drawerItems, navItemClick);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
