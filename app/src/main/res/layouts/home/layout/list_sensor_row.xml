@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/txtSensorName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#bae9c9"
+        android:fontFamily="sans-serif-light"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:text="Sensor Name: "
+        android:textColor="#101010"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtVendor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:paddingLeft="20dp"
+        android:text="Vendor: "
+        android:textColor="#101010"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtVersion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:paddingLeft="20dp"
+        android:text="Version : "
+        android:textColor="#101010"
+        android:textSize="18sp" />
+
+</LinearLayout>

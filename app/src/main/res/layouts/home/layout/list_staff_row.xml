@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/txtFullName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ff76e2dd"
+        android:fontFamily="sans-serif-light"
+        android:paddingBottom="5dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="5dp"
+        android:text="Lu Pham Xuan"
+        android:textColor="#101010"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/txtPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:fontFamily="sans-serif-light"
+        android:paddingLeft="40dp"
+        android:text="Phone: (+84) 166 7747 394"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/txtEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:fontFamily="sans-serif-light"
+        android:paddingLeft="40dp"
+        android:text="Email: pham.xuan.lu@framgia.com"
+        android:textSize="15sp" />
+
+</LinearLayout>

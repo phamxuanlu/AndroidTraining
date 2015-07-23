@@ -36,9 +36,11 @@ public class HomeActivity extends AppCompatActivity implements DrawerFragment.Ge
         lst.add(new NavDrawerItem(R.drawable.globe, "Home"));
         lst.add(new NavDrawerItem(R.drawable.map, "Maps"));
         lst.add(new NavDrawerItem(R.drawable.megaphone, "Notification"));
-        lst.add(new NavDrawerItem(R.drawable.music, "Music"));
+        lst.add(new NavDrawerItem(R.drawable.music, "Sensor"));
+        lst.add(new NavDrawerItem(R.drawable.gear, "Database"));
         lst.add(new NavDrawerItem(R.drawable.gear, "Settings"));
         lst.add(new NavDrawerItem(R.drawable.profle, "About"));
+
 
         return lst;
     }
@@ -74,7 +76,8 @@ public class HomeActivity extends AppCompatActivity implements DrawerFragment.Ge
                 "Home",
                 "Maps",
                 "Notification",
-                "Music"
+                "Sensor",
+                "Database"
         };
         return tabs;
     }
