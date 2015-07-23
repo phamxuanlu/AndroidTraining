@@ -20,10 +20,9 @@
         android:layout_margin="16dp"
         android:clickable="true"
         android:elevation="6dp"
-        android:src="@drawable/plus_sign"
+        android:src="@drawable/ic_action_add"
         app:borderWidth="0dp"
         app:fabSize="normal"
-        app:layout_behavior="com.framgia.lupx.androidtraining.behavior.ScrollAwareFABBehavior"
         app:pressedTranslationZ="12dp" />
 
 </android.support.design.widget.CoordinatorLayout>

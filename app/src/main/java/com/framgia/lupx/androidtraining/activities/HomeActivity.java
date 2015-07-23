@@ -1,5 +1,6 @@
 package com.framgia.lupx.androidtraining.activities;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -57,7 +58,8 @@ public class HomeActivity extends AppCompatActivity implements DrawerFragment.Ge
                         getSupportActionBar().setTitle(getDrawerItems().get(position).name);
                     } else {
                         if (tab.equals("settings")) {
-
+                            Intent intent = new Intent(HomeActivity.this, NewsDetailActivity.class);
+                            startActivity(intent);
                         }
                         if (tab.equals("about")) {
 

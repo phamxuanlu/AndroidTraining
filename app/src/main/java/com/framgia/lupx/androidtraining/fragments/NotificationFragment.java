@@ -2,6 +2,7 @@ package com.framgia.lupx.androidtraining.fragments;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -46,10 +47,13 @@ public class NotificationFragment extends Fragment {
         String message = edtMessage.getText().toString();
 
         Intent intent = new Intent(getActivity(), NotificationReceiverActivity.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getActivity());
+        stackBuilder.addParentStack(NotificationReceiverActivity.class);
+        stackBuilder.addNextIntent(intent);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("NAME", name);
         intent.putExtra("MESSAGE", message);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getActivity(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(getActivity())
                 .setSmallIcon(R.drawable.megaphone)

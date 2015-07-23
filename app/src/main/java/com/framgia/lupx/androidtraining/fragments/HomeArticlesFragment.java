@@ -11,6 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -34,6 +36,7 @@ public class HomeArticlesFragment extends Fragment {
     private HomeNewsAdapter adapter;
     private List<Article> articles;
     private View mView;
+    private ProgressBar loading;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,8 +51,9 @@ public class HomeArticlesFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_home_articles, container, false);
         recyclerView = (RecyclerView) mView.findViewById(R.id.listArticles);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        loading = (ProgressBar) mView.findViewById(R.id.loading);
         getData();
-
+        loading.setVisibility(View.VISIBLE);
         return mView;
     }
 
@@ -61,13 +65,12 @@ public class HomeArticlesFragment extends Fragment {
                 adapter = new HomeNewsAdapter(getActivity(), articles, new HomeNewsAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(int position) {
-                        Intent intent = new Intent(getActivity(), NewsDetailActivity.class);
-                        intent.putExtra("TITLE", articles.get(position).webTitle);
-                        getActivity().startActivity(intent);
+                        Toast.makeText(getActivity(), "Click on item " + position, Toast.LENGTH_SHORT).show();
                     }
                 });
                 recyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
+                loading.setVisibility(View.GONE);
             }
         }, new Response.ErrorListener() {
             @Override
